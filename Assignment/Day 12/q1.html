@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+
+        #message {
+            font-size: 20px;
+            transition: 0.5s;
+        }
+
+        .birthday-style {
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, red, yellow, blue, green, pink);
+            padding: 20px;
+            border-radius: 15px;
+            animation: glow 1s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px gold; }
+            to { box-shadow: 0 0 30px red; }
+        }
+
+        #gif {
+            display: none;
+            margin: 20px auto;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h4>There is a message for you!!</h4>
+
+    <p id="message">wait..</p>
+
+    <button id="btn" onclick="showMessage()">Click here to get it!</button>
+
+    <br><br>
+
+    <img id="gif" src="https://media.giphy.com/media/xSlDYEXknFwY4ucrZV/giphy.gif" width="300">
+
+    <script>
+        let count = 0;
+        let fontSize = 20;
+        const colors = ["red", "blue", "green", "purple"];
+
+        function showMessage() {
+
+            const msg = document.getElementById("message");
+            const gif = document.getElementById("gif");
+            const btn = document.getElementById("btn");
+
+            count++;
+
+            // First 3 clicks → increase size & change color
+            if (count <= 4) {
+                fontSize += 20;
+                msg.style.fontSize = fontSize + "px";
+                msg.style.color = colors[count - 1];
+            }
+
+            // Exactly on 4th click
+            if (count === 4) {
+
+                // Remove previous content
+                msg.innerHTML = "";
+
+                // Remove previous inline styles
+                msg.removeAttribute("style");
+
+                // Insert Happy Birthday message
+                msg.innerHTML = "🎉 Happy Birthday 🎂";
+
+                // Add happening style
+                msg.classList.add("birthday-style");
+
+                // Show GIF
+                gif.style.display = "block";
+
+                // Remove button
+                btn.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
