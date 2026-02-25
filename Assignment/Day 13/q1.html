@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaSCript Transition</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: lightblue;
+        }
+
+        #road1,
+        #road2 {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            background: #333;
+        }
+
+        #road1 {
+            bottom: 220px;
+        }
+
+        #road2 {
+            bottom: 80px;
+        }
+
+        .car {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            border-radius: 8px;
+            text-align: center;
+            line-height: 60px;
+            color: white;
+            font-weight: bold;
+        }
+
+        #car1 {
+            left: 0;
+            bottom: 240px;
+            background: crimson;
+        }
+
+        #car2 {
+            left: calc(100% - 120px);
+            bottom: 240px;
+            background: navy;
+        }
+
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #popup {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            font-size: 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="controls">
+        <button onclick="moveCar1()">Move Car 1</button>
+        <button onclick="moveCar2()">Move Car 2</button>
+    </div>
+
+    <div id="road1"></div>
+    <div id="road2"></div>
+
+    <div id="car1" class="car">CAR 1</div>
+    <div id="car2" class="car">CAR 2</div>
+
+    <div id="popup">🚗💥Get Insured!</div>
+
+    <script>
+
+        const car1 = document.getElementById("car1");
+        const car2 = document.getElementById("car2");
+        const popup = document.getElementById("popup");
+
+        let car1Pos = 0;
+        let car2Pos = window.innerWidth - 120;
+
+        let car1Direction = 1;
+        let car2Direction = -1;
+
+        let switched = false;
+
+        const stepDistance = 80;
+        const speed = 2;
+
+        function moveCar1() {
+            animateStep(1);
+        }
+
+        function moveCar2() {
+            animateStep(2);
+        }
+
+        function animateStep(carNumber) {
+
+            let start = carNumber === 1 ? car1Pos : car2Pos;
+            let direction = carNumber === 1 ? car1Direction : car2Direction;
+            let end = start + (stepDistance * direction);
+
+            function step() {
+
+                start += speed * direction;
+
+                if (carNumber === 1) {
+                    car1.style.left = start + "px";
+                } else {
+                    car2.style.left = start + "px";
+                }
+
+                if (
+                    (direction === 1 && start < end) ||
+                    (direction === -1 && start > end)
+                ) {
+                    requestAnimationFrame(step);
+                } else {
+
+                    if (carNumber === 1) car1Pos = start;
+                    else car2Pos = start;
+
+                    checkPreCollision();
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        function checkPreCollision() {
+
+            // Stop BEFORE overlapping
+            if (!switched && car1Pos + 120 >= car2Pos) {
+
+                switched = true;
+
+                // Keep small gap
+                car1Pos = car2Pos - 130; // 10px gap
+                car1.style.left = car1Pos + "px";
+
+                // Show popup
+                popup.style.display = "block";
+
+                // Move to next road
+                setTimeout(() => {
+                    popup.style.display = "none";
+
+                    car1.style.bottom = "100px";
+                    car2.style.bottom = "100px";
+
+                    // Reverse direction ONLY logically
+                    car1Direction = -1;
+                    car2Direction = 1;
+
+                }, 1000);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
