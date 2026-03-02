@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <style>
+        /* Basic styling for UI */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        main {
+            padding: 20px;
+            background-color: white;
+            margin: 20px;
+            border-radius: 8px;
+        }
+
+        #actions button {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #actions button:hover {
+            background-color: #0056b3;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        #user-info {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                {% for link in nav_links %}
+                    <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome, {{ user_name }}!</h1>  <!-- Displaying the user's name dynamically -->
+
+        <div id="user-info">
+            <h2>User Info</h2>
+            {{ user_info | safe }}
+        </div>
+
+        <div id="actions">
+            <h2>Actions</h2>
+            {% for button in action_buttons %}
+                <button>{{ button }}</button>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

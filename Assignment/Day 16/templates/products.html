@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        /* Basic styles for the product listing page */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            flex-basis: 30%;
+            margin-bottom: 10px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .apply-button {
+            padding: 10px 20px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .apply-button:hover {
+            background-color: #3498db;
+        }
+
+        .total-products {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .products-list ul {
+            list-style: none;
+        }
+
+        .product-item {
+            background-color: #ecf0f1;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .product-item strong {
+            display: block;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .product-item p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Product Listing</h1>
+        </header>
+
+        <!-- Filter Form -->
+        <form method="get" action="/products" class="filter-form">
+            <div class="filter-group">
+                <label for="category">Category:</label>
+                <select name="category" id="category">
+                    <option value="">All Categories</option>
+                    <option value="Electronics" {% if category == "Electronics" %}selected{% endif %}>Electronics</option>
+                    <option value="Clothing" {% if category == "Clothing" %}selected{% endif %}>Clothing</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="available">Availability:</label>
+                <select name="available" id="available">
+                    <option value="">All Availability</option>
+                    <option value="true" {% if available == "true" %}selected{% endif %}>Available</option>
+                    <option value="false" {% if available == "false" %}selected{% endif %}>Not Available</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="sort">Sort by Price:</label>
+                <select name="sort" id="sort">
+                    <option value="low_to_high" {% if sort_by == "low_to_high" %}selected{% endif %}>Low to High</option>
+                    <option value="high_to_low" {% if sort_by == "high_to_low" %}selected{% endif %}>High to Low</option>
+                </select>
+            </div>
+
+            <button type="submit" class="apply-button">Apply Filters</button>
+        </form>
+
+        <!-- Total Products Count -->
+        <div class="total-products">
+            <h3>Total Products: {{ total_count }}</h3>
+        </div>
+
+        <!-- Display Products or No Results Message -->
+        <div class="products-list">
+            {% if no_results %}
+                <p>No products found.</p>
+            {% else %}
+                <ul>
+                    {% for product in products %}
+                        <li class="product-item">
+                            <strong>{{ product.name }}</strong><br>
+                            Category: {{ product.category }}<br>
+                            Price: ${{ product.price }}<br>
+                            {% if product.available %}
+                                Availability: In Stock
+                            {% else %}
+                                Availability: Out of Stock
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
