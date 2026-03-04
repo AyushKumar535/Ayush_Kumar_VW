@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Your Cart</h1>
+
+        {% if empty %}
+            <p class="alert alert-warning text-center">Your cart is empty.</p>
+        {% else %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>${{ item.price }}</td>
+                            <td>{{ item.qty }}</td>
+                            <td>${{ item.subtotal }}</td>
+                            <td>
+                                <a href="/cart/update/{{ item.name }}/increase" class="btn btn-success btn-sm">+</a>
+                                <a href="/cart/update/{{ item.name }}/decrease" class="btn btn-danger btn-sm">-</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3 class="text-end">Total: ${{ total }}</h3>
+            <div class="d-flex justify-content-between">
+                <a href="/cart/clear" class="btn btn-danger">Clear Cart</a>
+                <a href="/orders/checkout" class="btn btn-primary">Proceed to Checkout</a>
+            </div>
+        {% endif %}
+        <br>
+        <a href="/products/" class="btn btn-secondary">Back to Products</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybB5pCicjI70yJY1p3lbQ5pJgQ72kXj0j7t85KS2qA0zClP3m" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0l4O0w8nCv5R0k8v5nzt8zZ8nJl/9Xyvvmb17GnFE4ChnV2H" crossorigin="anonymous"></script>
+</body>
+</html>
