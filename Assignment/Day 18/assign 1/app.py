@@ -8,7 +8,7 @@ CORS(app)
 # product storage
 products = []
 
-@app.route('/upload', methods=['POST'])
+@app.route('/post', methods=['POST'])
 def upload_csv():
 
     if 'file' not in request.files:
@@ -61,7 +61,7 @@ def upload_csv():
     })
 
 
-@app.route('/products', methods=['GET'])
+@app.route('/get', methods=['GET'])
 def get_products():
     return jsonify(products)
 
