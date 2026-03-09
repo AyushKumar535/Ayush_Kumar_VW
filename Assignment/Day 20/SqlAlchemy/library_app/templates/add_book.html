@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add a New Book</h2>
+<form method="POST">
+    <label>Title:</label><br>
+    <input type="text" name="title" required><br><br>
+    
+    <label>Author:</label><br>
+    <input type="text" name="author" required><br><br>
+    
+    <label>Copies:</label><br>
+    <input type="number" name="copies" value="1" min="1" required><br><br>
+    
+    <input type="submit" value="Add Book">
+</form>
+{% endblock %}

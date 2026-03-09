@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Library Management System</h1>
+    <nav>
+        <a href="{{ url_for('main.index') }}">Home</a> |
+        <a href="{{ url_for('main.add_book') }}">Add Book</a> |
+        <a href="{{ url_for('main.unavailable_books') }}">Unavailable Books</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
